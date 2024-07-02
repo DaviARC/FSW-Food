@@ -10,6 +10,7 @@ const LiModificado = styled.li`
     box-shadow: 5px 5px 30px 0px #0000000F;
     font-size: 14px;
     justify-content: center;
+    cursor: pointer;
     & a{
         text-decoration: none;
         font-weight: 600;
@@ -19,7 +20,7 @@ const LiModificado = styled.li`
 
 const ItemCategoria = ({ children, pathImagem, alt }) => {
     return (
-        <div style={{height: "70px", margin:"10px 0"}}>    
+        <div style={{height: "60px"}}>    
             <LiModificado>
                 <img
                     src={pathImagem}
