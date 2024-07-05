@@ -8,7 +8,7 @@ import ItemRestaurante from './ItemRestaurante';
 
 const ContItens = styled.div`
     .nav-categorias-swipper{
-        display: block;
+        display: "block";
     }
     .nav-categorias-swipper{
         margin: 24px 0;
@@ -18,10 +18,10 @@ const ContItens = styled.div`
     }
 
     @media screen and (min-width: 1024px){
+        display: ${props => props.$mobile ? "none" : "block"};
         .nav-categorias-swipper{
             display: none;
         }
-        
         .nav-categorias{
             display: block;
         }
@@ -29,7 +29,8 @@ const ContItens = styled.div`
             display: flex;
             justify-content: space-between;
             margin: 16px 0;
-            overflow: hidden;
+            overflow: ${props => props.paginaRestaurante ? "visible" : "hidden"};
+            flex-wrap: ${props => props.paginaRestaurante ? "wrap" : "nowrap"};
         }
     }
 `
@@ -40,7 +41,7 @@ const H3Modificado = styled.h3`
 const SpanVerTodos = styled.span`
     font-size: 14px;
     color: #EA1D2C;
-    display: flex;
+    display: ${props => props.paginaRestaurante ? "none" : "flex"};
     align-items: center;
     gap: 2.5px;
     position: relative;
@@ -52,16 +53,16 @@ const SpanVerTodos = styled.span`
     }
 `
 
-const Lista = ({ categorias, listaItens, titulo, pedidos, restaurantes }) => {
+const Lista = ({ categorias, listaItens, titulo, pedidos, restaurantes, paginaRestaurante, $mobile }) => {
     let SwiperComponents = null
     let Itens = null
     let CampoTexto = null
     if(!categorias){
         CampoTexto = <div style={{display: "flex", justifyContent: "space-between", marginTop: "20px"}}>
             <H3Modificado>{titulo}</H3Modificado>
-            <SpanVerTodos>Ver todos <span>{">"}</span></SpanVerTodos>
+            <SpanVerTodos paginaRestaurante={paginaRestaurante}>Ver todos <span>{">"}</span></SpanVerTodos>
         </div>
-    } 
+    }
     if(categorias){
         SwiperComponents = listaItens.map(categoria => {
             return(
@@ -91,28 +92,28 @@ const Lista = ({ categorias, listaItens, titulo, pedidos, restaurantes }) => {
     SwiperComponents = 
     <>
         <SwiperSlide key={`slide`}>
-            <ItemPedido item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
+            <ItemPedido paginaRestaurante={paginaRestaurante} item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
         </SwiperSlide>
          <SwiperSlide key={`slide`}>
-         <ItemPedido item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
+         <ItemPedido paginaRestaurante={paginaRestaurante} item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
         </SwiperSlide>
         <SwiperSlide key={`slide`}>
-            <ItemPedido item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
+            <ItemPedido paginaRestaurante={paginaRestaurante} item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
         </SwiperSlide>
         <SwiperSlide key={`slide`}>
-            <ItemPedido item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
+            <ItemPedido paginaRestaurante={paginaRestaurante} item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
         </SwiperSlide>
     </>
-    Itens = <ItemPedido item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
+    Itens = <ItemPedido paginaRestaurante={paginaRestaurante} item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
    } else if(restaurantes){
-    SwiperComponents = <ItemRestaurante restaurante={{nome: "Sushidojo"}}/>
+    SwiperComponents = <ItemRestaurante paginaRestaurante={paginaRestaurante} restaurante={{nome: "Sushidojo"}}/>
     Itens = <ItemRestaurante restaurante={{nome: "Sushidojo"}}/>
    }
 
     return (
         <>
+            <ContItens $mobile={$mobile}>
             {CampoTexto}
-            <ContItens>
                 <nav className='nav-categorias-swipper'>
                     <Swiper
                         spaceBetween={1}

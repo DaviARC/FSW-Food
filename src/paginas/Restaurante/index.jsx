@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import Header from "../../components/Header"
 import DescricaoRestaurante from "../../components/DescricaoRestaurante";
+import Lista from "../../components/Lista";
 
 const Restaurante = () => {
     const parametros = useParams();
@@ -18,8 +19,11 @@ const Restaurante = () => {
 
     return(
         <>
-            <Header barraDePesquisa/>
+            <Header barraDePesquisa $desktop/>
             <DescricaoRestaurante restaurante={restaurante}/>
+            <Lista titulo='Mais pedidos' pedidos paginaRestaurante/>
+            <Lista titulo='Comida japonesa' $mobile pedidos paginaRestaurante/>
+            <Lista titulo='Sucos' pedidos paginaRestaurante/>
         </>
     )
 }

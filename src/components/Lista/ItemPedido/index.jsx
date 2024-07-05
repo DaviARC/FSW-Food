@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 const CardCont = styled.div`
@@ -16,20 +17,24 @@ const CardCont = styled.div`
     & .itemPedido{
         font-size: 14px;
         color: #7E8392;
+        display: ${props => props.paginaRestaurante ? "none" : "block"};
     }
 `
 
-const ItemPedido = ({ item }) => {
+const ItemPedido = ({ item, paginaRestaurante }) => {
     return (
         <li>
-            <CardCont>
+            <CardCont paginaRestaurante={paginaRestaurante}>
+            <Link to={`/restaurante/${item.restaurante}/${item.nome}`}>
                 <div className="img"></div>
+            </Link>
                 <div className="cont-texto">
                     <div className="nomeItem">{item.nome}</div>
                     <div className="precoItem">{item.preco}</div>
                     <div className="itemPedido">{item.restaurante}</div>
                 </div>
             </CardCont>
+            
         </li>
     )
 }

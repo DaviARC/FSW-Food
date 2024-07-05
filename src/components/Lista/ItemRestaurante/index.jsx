@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components"
+import Estrela from "../../Estrela";
+import FavoritoBotao from "../../FavoritoBotao";
 
 const ContItemRestaurante = styled.div`
     position: relative;
@@ -20,27 +22,6 @@ const ContItemRestaurante = styled.div`
         left: 50%;
         transform: translateX(-50%);
         align-items: center;
-    }
-    .estrela{
-        padding: 6px;
-        background-color: #FFFFFF;
-        border-radius: 16px;
-        font-size: 14px;
-        font-weight: 600;
-        color: #323232;
-    }
-    .iconeEstrela{
-        margin-right: 4px;
-    }
-    .favorito{
-        width: 32.5px;
-        height: 32.5px;
-        border-radius: 50%;
-        background-color: #3C3C3C;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
     }
     .nomeRestaurante{
         color: #323232;
@@ -94,8 +75,8 @@ const ItemRestaurante = ({ restaurante }) => {
                 <Link style={{width: "auto"}} to={`/restaurante/${restaurante.nome}`}>
                     <div className="img"></div>
                     <div className="icones">
-                        <div className="estrela"><img className="iconeEstrela" src="/icones/estrela.png"/>5.0</div>
-                        <div className="favorito"><img src="/icones/heart.png"/></div>
+                        <Estrela quantidade={'5.0'}/>
+                        <FavoritoBotao/>
                     </div>
                 </Link>
                 <div className="nomeRestaurante">{restauranteValidado.nome}</div>
