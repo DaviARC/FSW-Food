@@ -61,7 +61,7 @@ const EstilosGlobais = createGlobalStyle`
 
     @media screen and (min-width: 1024px) {
         body{
-            width: 85%;
+            width: 90%;
             margin: auto;
         }
     }

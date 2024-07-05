@@ -3,7 +3,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css'
 import styled from 'styled-components';
 import ItemCategoria from './ItemCategoria';
-import RestauranteItem from './RestauranteItem';
+import ItemPedido from './ItemPedido';
+import ItemRestaurante from './ItemRestaurante';
 
 const ContItens = styled.div`
     .nav-categorias-swipper{
@@ -51,7 +52,7 @@ const SpanVerTodos = styled.span`
     }
 `
 
-const Lista = ({ categorias, listaItens, titulo, pedidos }) => {
+const Lista = ({ categorias, listaItens, titulo, pedidos, restaurantes }) => {
     let SwiperComponents = null
     let Itens = null
     let CampoTexto = null
@@ -87,7 +88,25 @@ const Lista = ({ categorias, listaItens, titulo, pedidos }) => {
             }
         )
    } else if(pedidos){
-    Itens = <RestauranteItem item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
+    SwiperComponents = 
+    <>
+        <SwiperSlide key={`slide`}>
+            <ItemPedido item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
+        </SwiperSlide>
+         <SwiperSlide key={`slide`}>
+         <ItemPedido item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
+        </SwiperSlide>
+        <SwiperSlide key={`slide`}>
+            <ItemPedido item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
+        </SwiperSlide>
+        <SwiperSlide key={`slide`}>
+            <ItemPedido item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
+        </SwiperSlide>
+    </>
+    Itens = <ItemPedido item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
+   } else if(restaurantes){
+    SwiperComponents = <ItemRestaurante restaurante={{nome: "Sushidojo"}}/>
+    Itens = <ItemRestaurante restaurante={{nome: "Sushidojo"}}/>
    }
 
     return (

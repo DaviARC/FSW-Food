@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const ContCard = styled.div`
-    background-color: #EA1D2C;
+    background-color: ${props => props.$amarelo ? "#FFB100" : "#EA1D2C"};
     width: 100%;
     align-items: center;
     position: relative;
@@ -10,7 +10,7 @@ const ContCard = styled.div`
     color: #FFFFFF;
     font-size: 1rem;
     border-radius: 10px;
-    display: flex;
+    display:${props => props.$desktop ? 'none' : 'flex'};
 
     & .strong{
         font-size: 1.8rem;
@@ -46,17 +46,14 @@ const ContCard = styled.div`
     }
 `
 
-const CardDesconto = ({ $mobile}) => {
+const CardDesconto = ({ $mobile, $desktop, $amarelo, path, text }) => {
     return(
-        <ContCard $mobile={$mobile}>
+        <ContCard $mobile={$mobile} $desktop={$desktop} $amarelo={$amarelo}>
             <div className="contTexto">
-                <div>até</div>
-                <div><span className="strong">30%</span> de</div>
-                <div><span className="strong">Desconto</span></div>
-                <div>em Pizzas</div>
+                {text}
             </div>
             <img
-                src="/public/pizza-card.png"
+                src={path}
                 alt="pizza"
             />
         </ContCard>

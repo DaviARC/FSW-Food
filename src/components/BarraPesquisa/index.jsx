@@ -41,7 +41,6 @@ const ContBarraPesquisa = styled.div`
 
 // eslint-disable-next-line react/prop-types
 const BarraPesquisa = ({ amarelo, $mobile }) =>{
-    console.log(amarelo)
     return(
         <ContBarraPesquisa $mobile={$mobile}>
             <input

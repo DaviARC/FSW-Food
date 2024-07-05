@@ -1,5 +1,13 @@
 import styled from 'styled-components';
 
+const ContLi = styled.div`
+    height: 60px;
+    @media screen and (min-width: 1024px) {
+        display: flex;
+        align-items: center;
+        margin: 20px 0 ;
+    }
+`
 const LiModificado = styled.li`
     display: flex;
     align-items: center;
@@ -7,7 +15,7 @@ const LiModificado = styled.li`
     gap: 4.5px;
     padding: 8px 24px;
     max-width: 120px;
-    box-shadow: 5px 5px 30px 0px #0000000F;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     font-size: 14px;
     justify-content: center;
     cursor: pointer;
@@ -16,11 +24,14 @@ const LiModificado = styled.li`
         font-weight: 600;
         color: #323232;
     }
+    @media screen and (min-width: 1024px) {
+        padding: 10px 24px;
+    }
 `
 
 const ItemCategoria = ({ children, pathImagem, alt }) => {
     return (
-        <div style={{height: "60px"}}>    
+        <ContLi>    
             <LiModificado>
                 <img
                     src={pathImagem}
@@ -28,7 +39,7 @@ const ItemCategoria = ({ children, pathImagem, alt }) => {
                 />
                 <a href=''>{children}</a>
             </LiModificado>
-        </div>
+        </ContLi>
     )
 }
 
