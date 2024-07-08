@@ -4,6 +4,7 @@ import styled from 'styled-components'
 const ContBarraPesquisa = styled.div`
     position: relative;
     width: 100%;
+    display: ${props => props.$desktop ? 'none' : 'block'};
 
 & input{
     box-sizing: border-box;
@@ -33,6 +34,7 @@ const ContBarraPesquisa = styled.div`
 
 @media screen and (min-width: 1024px) {
     display:${props => props.$mobile ? 'none' : 'block'};
+    
     &, & input{
         width: 610px;
     }
@@ -40,9 +42,9 @@ const ContBarraPesquisa = styled.div`
 `
 
 // eslint-disable-next-line react/prop-types
-const BarraPesquisa = ({ amarelo, $mobile }) =>{
+const BarraPesquisa = ({ amarelo, $mobile, $desktop }) =>{
     return(
-        <ContBarraPesquisa $mobile={$mobile}>
+        <ContBarraPesquisa $mobile={$mobile} $desktop={$desktop}>
             <input
                 placeholder="Buscar Restaurantes"
             />

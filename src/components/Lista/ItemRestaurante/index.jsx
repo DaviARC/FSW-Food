@@ -5,7 +5,7 @@ import FavoritoBotao from "../../FavoritoBotao";
 
 const ContItemRestaurante = styled.div`
     position: relative;
-    width: 260px;
+    width: ${props=> props.$width ? "100%" : "260px"};
     .img{
         width: 100%;
         height: 140px;
@@ -59,7 +59,7 @@ const ContItemRestaurante = styled.div`
     }
 `
 
-const ItemRestaurante = ({ restaurante }) => {
+const ItemRestaurante = ({ restaurante, favorito, $width }) => {
     class Restaurante {
         constructor({ nome, entrega = 'Entrega Grátis', prazo = '45 min' }) {
             this.nome = nome;
@@ -69,16 +69,16 @@ const ItemRestaurante = ({ restaurante }) => {
     }
 
     const restauranteValidado = new Restaurante(restaurante)
-    
+
     return(
-        <ContItemRestaurante>
+        <ContItemRestaurante $width={$width}>
                 <Link style={{width: "auto"}} to={`/restaurante/${restaurante.nome}`}>
                     <div className="img"></div>
-                    <div className="icones">
-                        <Estrela quantidade={'5.0'}/>
-                        <FavoritoBotao/>
-                    </div>
                 </Link>
+                        <div className="icones">
+                            <Estrela quantidade={'5.0'}/>
+                            <FavoritoBotao favorito={favorito}/>
+                        </div>
                 <div className="nomeRestaurante">{restauranteValidado.nome}</div>
                 <div className="contEntrega">
                     <div className="contEntregaConteudo">

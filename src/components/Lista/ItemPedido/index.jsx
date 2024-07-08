@@ -5,8 +5,8 @@ const CardCont = styled.div`
     line-height: 22px;
     overflow: hidden;
     & .img {
-        width: 180px;
-        height: 180px;
+        width: 160px;
+        height: 160px;
         border-radius: 10px;
         background-color: black;
         margin-bottom: 8px;
@@ -23,7 +23,7 @@ const CardCont = styled.div`
 
 const ItemPedido = ({ item, paginaRestaurante }) => {
     return (
-        <li>
+        <li style={{listStyle: "none"}}>
             <CardCont paginaRestaurante={paginaRestaurante}>
             <Link to={`/restaurante/${item.restaurante}/${item.nome}`}>
                 <div className="img"></div>

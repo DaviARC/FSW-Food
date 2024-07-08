@@ -7,6 +7,7 @@ import ItemPedido from './ItemPedido';
 import ItemRestaurante from './ItemRestaurante';
 
 const ContItens = styled.div`
+    display: ${props => props.$desktop ? "none" : "block"};
     .nav-categorias-swipper{
         display: "block";
     }
@@ -53,7 +54,7 @@ const SpanVerTodos = styled.span`
     }
 `
 
-const Lista = ({ categorias, listaItens, titulo, pedidos, restaurantes, paginaRestaurante, $mobile }) => {
+const Lista = ({ categorias, listaItens, titulo, pedidos, restaurantes, paginaRestaurante, $mobile, $desktop }) => {
     let SwiperComponents = null
     let Itens = null
     let CampoTexto = null
@@ -112,7 +113,7 @@ const Lista = ({ categorias, listaItens, titulo, pedidos, restaurantes, paginaRe
 
     return (
         <>
-            <ContItens $mobile={$mobile}>
+            <ContItens $desktop={$desktop} $mobile={$mobile}>
             {CampoTexto}
                 <nav className='nav-categorias-swipper'>
                     <Swiper

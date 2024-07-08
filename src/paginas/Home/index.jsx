@@ -29,7 +29,7 @@ const Home = () => {
     },
     {
         path: pizza,
-        nome: "Pizza"
+        nome: "Pizzas"
     },
     {
         path: sobremesa,

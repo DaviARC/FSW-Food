@@ -5,7 +5,7 @@ const ButtonFavorito = styled.button`
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #3C3C3C;
+    background-color: ${props => props.$favorito ? "#FFFFFF" : "#3C3C3C"};
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,9 +13,9 @@ const ButtonFavorito = styled.button`
     cursor: pointer;    
 `
 
-const FavoritoBotao = () => {
+const FavoritoBotao = ({ favorito }) => {
     return(
-        <ButtonFavorito><img src="/icones/heart.png"/></ButtonFavorito>
+        <ButtonFavorito $favorito={favorito}><img src={favorito ? "/icones/heart-selecionado.png" : "/icones/heart.png"}/></ButtonFavorito>
     )
 }
 

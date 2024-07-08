@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const ContLi = styled.div`
@@ -32,13 +33,15 @@ const LiModificado = styled.li`
 const ItemCategoria = ({ children, pathImagem, alt }) => {
     return (
         <ContLi>    
-            <LiModificado>
-                <img
-                    src={pathImagem}
-                    alt={alt}
-                />
-                <a href=''>{children}</a>
-            </LiModificado>
+            <Link to={`/produto/${children}`} style={{textDecoration: "none"}}>
+                <LiModificado>
+                    <img
+                        src={pathImagem}
+                        alt={alt}
+                    />
+                    <a href=''>{children}</a>
+                </LiModificado>
+            </Link>
         </ContLi>
     )
 }

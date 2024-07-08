@@ -1,9 +1,10 @@
 import styled from "styled-components"
 import Estrela from "../Estrela"
 import FavoritoBotao from "../FavoritoBotao"
-import { Link } from "react-router-dom"
+import SetaVoltar from "../SetaVoltar"
+import EntregaBloco from "../EntregaBloco"
 
-const SectionRestaurante = styled.section`
+const SectionRestaurante = styled.main`
     display: flex;
     justify-content: space-between;
     margin-top: 40px;
@@ -35,27 +36,6 @@ const SectionRestaurante = styled.section`
         font-weight: 600;
         color: #FFFFFF;
     }
-    .contEntrega{
-        display: flex;
-        justify-content: space-around;
-        border: 1px solid #EEEEEE;
-        margin-top: 16px;
-        border-radius: 20px;
-        padding: 10px;
-    }
-    .entrega{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 6px;
-    }
-    .entrega span{
-        color: #7E8392;
-    }
-    .entrega div{
-        color: #323232;
-        font-weight: 600;
-    }
     .categoria{
         width: 45%;
         background-color: #F4F4F5;
@@ -85,6 +65,7 @@ const SectionRestaurante = styled.section`
         width: 100%;
         left: 0;
         position: absolute;
+        margin: 0;
         .img{
             width: 100%;
             left: 0;
@@ -115,15 +96,6 @@ const SectionRestaurante = styled.section`
             left: 50%;
             transform: translateX(-50%);
         }
-        .contIcones div{
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
         .categoria{
             margin: 12px 0 0 0;
         }
@@ -141,9 +113,7 @@ const DescricaoRestaurante = ({ restaurante }) => {
             <SectionRestaurante>
                 <div className="img"/>
                 <div className="contIcones">
-                    <Link to={'/'}>
-                        <div><img src="/icones/seta.png"/></div>
-                    </Link>
+                    <SetaVoltar/>
                     <FavoritoBotao/>
                 </div>
                 <div className="contTexto">
@@ -153,20 +123,7 @@ const DescricaoRestaurante = ({ restaurante }) => {
                             <Estrela quantidade={restaurante.estrela} $cinza/>
                         </div>
                     </header>    
-                    <div className="contEntrega">
-                        <div className="entrega">
-                            <span>
-                                Entrega <img src="/icones/entregador-cinza.png"/>
-                            </span>
-                            <div>Grátis</div>
-                        </div>
-                        <div className="entrega">
-                            <span>
-                                Entrega <img src="/icones/timer-cinza.png"/>
-                            </span>
-                            <div>40 min</div>
-                        </div>
-                    </div>
+                    <EntregaBloco/>
                     <div className="categoria">{restaurante.categoria}</div>
                     <div className="descricaoRestaurante">
                         <h2>Sobre</h2>

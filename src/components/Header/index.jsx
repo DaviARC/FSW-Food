@@ -11,6 +11,9 @@ const HeaderEstilizado = styled.header`
     width: 100%;
     align-items: center;
 
+    .linha{
+        display: none;
+    }
     & .logo{
         width: 6.25rem;
     }
@@ -39,7 +42,7 @@ const HeaderEstilizado = styled.header`
     }
 `
 
-const Header = ({ barraDePesquisa, $desktop }) => {
+const Header = ({ barraDePesquisa, $desktop, $barraDesktop }) => {
     return(
         <HeaderEstilizado barraDePesquisa={barraDePesquisa} $desktop ={$desktop}>
             <Link to={'/'}>
@@ -49,7 +52,7 @@ const Header = ({ barraDePesquisa, $desktop }) => {
                     alt='Logo FSW Food'
                 />
             </Link>
-            {barraDePesquisa ? <BarraPesquisa/> : ''}
+            {barraDePesquisa ? <BarraPesquisa $desktop={$barraDesktop}/> : ''}
             <label >
                 <input className='checkbox' type='checkbox'/>
                 <img
