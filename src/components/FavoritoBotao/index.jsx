@@ -13,9 +13,9 @@ const ButtonFavorito = styled.button`
     cursor: pointer;    
 `
 
-const FavoritoBotao = ({ favorito }) => {
+const FavoritoBotao = ({ favorito, aoClicar, restaurante }) => {
     return(
-        <ButtonFavorito $favorito={favorito}><img src={favorito ? "/icones/heart-selecionado.png" : "/icones/heart.png"}/></ButtonFavorito>
+        <ButtonFavorito onClick={() => {aoClicar(restaurante)}} $favorito={favorito}><img src={favorito ? "/icones/heart-selecionado.png" : "/icones/heart.png"}/></ButtonFavorito>
     )
 }
 

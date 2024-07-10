@@ -13,13 +13,16 @@ const MainRestaurantes = styled.main`
 
 const RestauranteFavoritos = () => {
     const [restaurante, setRestaurante] = useState('Sushidojo');
+    function aoClicar(restaurante){
+        setRestaurante(restaurante)
+    }
 
     return(
         <>
             <Header barraDePesquisa $barraDesktop />
             <Titulo>Restaurantes Favoritos</Titulo>
             <MainRestaurantes>
-              <ItemRestaurante favorito $width restaurante={{nome: "Sushidojo"}}/>
+              <ItemRestaurante aoClicar={aoClicar} favorito $width restaurante={{nome: "Sushidojo"}}/>
               <ItemRestaurante favorito $width restaurante={{nome: "Sushidojo"}}/>
               <ItemRestaurante favorito $width restaurante={{nome: "Sushidojo"}}/>
             </MainRestaurantes>

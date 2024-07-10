@@ -81,6 +81,7 @@ const ContDescricao = styled.main`
         width: 100%;
         display: flex;
         justify-content: space-between;
+        margin-top: 40px;
         .img{
             width: 50%;
             height: 500px;
@@ -145,7 +146,7 @@ const DescricaoProduto = ({ produto }) => {
                         <h2>Sobre</h2>
                         <p>{produto.sobre}</p>
                     </div>
-                    <Botao>Adicionar</Botao>
+                    <Botao $desktop>Adicionar</Botao>
                 </div>
             </ContDescricao>
             <ContAbsolute/>

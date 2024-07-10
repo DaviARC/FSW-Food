@@ -59,7 +59,7 @@ const ContItemRestaurante = styled.div`
     }
 `
 
-const ItemRestaurante = ({ restaurante, favorito, $width }) => {
+const ItemRestaurante = ({ restaurante, favorito, $width, aoClicar }) => {
     class Restaurante {
         constructor({ nome, entrega = 'Entrega Grátis', prazo = '45 min' }) {
             this.nome = nome;
@@ -77,7 +77,7 @@ const ItemRestaurante = ({ restaurante, favorito, $width }) => {
                 </Link>
                         <div className="icones">
                             <Estrela quantidade={'5.0'}/>
-                            <FavoritoBotao favorito={favorito}/>
+                            <FavoritoBotao favorito={favorito} aoClicar={aoClicar} restaurante={restaurante.nome}/>
                         </div>
                 <div className="nomeRestaurante">{restauranteValidado.nome}</div>
                 <div className="contEntrega">
