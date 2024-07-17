@@ -3,23 +3,35 @@ import DescricaoProduto from "../../components/DescricaoProduto"
 import Header from "../../components/Header"
 import Lista from "../../components/Lista"
 import Botao from "../../components/Botao";
+import { useContext } from "react";
+import AppContext from "../../contexts/myContext";
 
 
 const Produto = () => {
     const parametros = useParams();
-    
-    let produto = {
-        nome: parametros.nome,
-        restaurante: parametros.restaurante,
-        preco: 31.5,
-        sobre: 'O Ramen Clássico apresenta uma harmoniosa combinação de macarrão, caldo saboroso e fatias de carne de porco, criando um prato reconfortante e cheio de sabor, perfeito para satisfazer os paladares apaixonados pela culinária japonesa.'
+    const { itens } = useContext(AppContext)
+
+    const itensRestaurante = itens.filter(item => {
+        return item.nm_restaurante === parametros.restaurante
+    })
+
+    const itensLista = {
+        selecionado: itensRestaurante.filter(item => item.nm_item === parametros.nome),
+
+        recomendados: itensRestaurante.filter(item => item.nm_categoria !== 'Sucos' && item.nm_categoria !== 'Refrigerantes' && item.nm_categoria !== 'Sobremesas'),
+        
+        sucos: itensRestaurante.filter(item => item.nm_categoria === 'Sucos'),
+        
+        refrigerantes: itensRestaurante.filter(item => item.nm_categoria === 'Refrigerantes'),
+       
+        sobremesas: itensRestaurante.filter(item => item.nm_categoria === 'Sobremesas')
     }
 
     return(
         <>
             <Header barraDePesquisa $desktop/>
-            <DescricaoProduto produto={produto}/>
-            <Lista titulo='Sucos' pedidos paginaRestaurante/>
+            {itens[0] ? <DescricaoProduto item={itensLista.selecionado[0]}/> : ''}
+            {itensLista.sucos[0] ? <Lista listaItens={itensLista.sucos} titulo='Sucos' pedidos paginaRestaurante/> : <Lista listaItens={itensLista.refrigerantes} titulo='Refrigerantes' pedidos paginaRestaurante/>}
             <Botao $mobile>Adicionar à Sacola</Botao>
         </>
     )

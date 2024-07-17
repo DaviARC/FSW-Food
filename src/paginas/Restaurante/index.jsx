@@ -5,28 +5,38 @@ import Lista from "../../components/Lista";
 import PedidoFooter from "../../components/PedidoFooter";
 import Sacola from "../../components/Sacola";
 import PedidoEfetuado from "../../components/PedidoEfetuado";
+import { useContext } from "react";
+import AppContext from "../../contexts/myContext";
 
 const Restaurante = () => {
     const parametros = useParams();
+    const { restaurantes, itens } = useContext(AppContext)
 
-    let restaurantes = [
-        {
-            nome: "Sushidojo",
-            sobre: "O SushiDojo é uma joia gastronômica que transporta seus clientes para o coração do Japão, com sua atmosfera serena, design minimalista e um balcão de sushi onde mestres habilidosos preparam pratos autênticos com ingredientes frescos e selecionados, garantindo uma experiência culinária excepcional e memorável.",
-            estrela: '5.0',
-            categoria: 'Japonesa'
-        }
-    ]
+    const restaurante = restaurantes.filter(restaurante => {
+        return restaurante.nm_restaurante == parametros.nome
+    })
+    const itensRestaurante = itens.filter(item => {
+        return item.nm_restaurante === parametros.nome
+    })
 
-    const restaurante = restaurantes.find(restaurante => restaurante.nome = parametros.nome)
+    const itensLista = {
+        recomendados: itensRestaurante.filter(item => item.nm_categoria !== 'Sucos' && item.nm_categoria !== 'Refrigerantes' && item.nm_categoria !== 'Sobremesas'),
+        
+        sucos: itensRestaurante.filter(item => item.nm_categoria === 'Sucos'),
+        
+        refrigerantes: itensRestaurante.filter(item => item.nm_categoria === 'Refrigerantes'),
+       
+        sobremesas: itensRestaurante.filter(item => item.nm_categoria === 'Sobremesas')
+    }
 
     return(
         <>
             <Header barraDePesquisa $desktop/>
-            <DescricaoRestaurante restaurante={restaurante}/>
-            <Lista titulo='Mais pedidos' pedidos paginaRestaurante/>
-            <Lista titulo='Comida japonesa' $mobile pedidos paginaRestaurante/>
-            <Lista titulo='Sucos' pedidos paginaRestaurante/>
+            {restaurante[0] ? <DescricaoRestaurante restaurante={restaurante[0]}/> : ''}
+            {itensLista.recomendados[0] ? <Lista listaItens={itensLista.recomendados} titulo='Pedidos Recomendados' pedidos paginaRestaurante/> : ''}
+            {itensLista.sobremesas[0] ? <Lista listaItens={itensLista.sobremesas} titulo='Sobremesas' $mobile pedidos paginaRestaurante/> : ''}
+            {itensLista.refrigerantes[0] ? <Lista listaItens={itensLista.refrigerantes} titulo='refrigerantes' pedidos paginaRestaurante/> : ''}
+            {itensLista.sucos[0] ? <Lista listaItens={itensLista.sucos} titulo='Sucos' pedidos paginaRestaurante/> : ''}
             <PedidoFooter $none/>
             <Sacola $none/>
             <PedidoEfetuado $none/>

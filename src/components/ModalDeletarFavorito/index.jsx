@@ -46,15 +46,16 @@ const ModalDeletarFavorito = ({ restaurante, aoFechar }) => {
     return(
         <>
             {restaurante && <>
-                <Overlay/>
-                <DialogEstilizado open={!!restaurante} onClose={aoFechar}>
-                    <div className="tituloDialog">Remover Restaurante</div>
-                    <div className="sobreDialog">Tem certeza que deseja remover esse restaurante dos favoritos?</div>
-                    <form method="dialog" className="contButtons">
-                        <button className="cancelar" formMethod="dialog">Cancelar</button>
-                        <button className="confirmar" type="submit">Confirmar</button>
-                    </form>
-                </DialogEstilizado>
+                <Overlay>
+                    <DialogEstilizado open={!!restaurante} onClose={aoFechar}>
+                        <div className="tituloDialog">Remover Restaurante</div>
+                        <div className="sobreDialog">Tem certeza que deseja remover esse restaurante dos favoritos?</div>
+                        <form method="dialog" className="contButtons">
+                            <button className="cancelar" formMethod="dialog">Cancelar</button>
+                            <button className="confirmar" type="submit">Confirmar</button>
+                        </form>
+                    </DialogEstilizado>
+                </Overlay>
             </>}
         </>
     )

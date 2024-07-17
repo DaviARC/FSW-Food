@@ -106,9 +106,6 @@ const ContDescricao = styled.main`
             padding: 40px;
             border-radius: 10px;
         }
-        .contQuantidade{
-            margin-bottom: 10px;
-        }
         & p{
             line-height: 21px;
         }
@@ -120,20 +117,20 @@ const ContAbsolute = styled.div`
     }
 `
 
-const DescricaoProduto = ({ produto }) => {
-    const precoFormatado = produto.preco.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+const DescricaoProduto = ({ item = {} }) => {
+    const precoFormatado = item.pre_item.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
 
     return(
         <>
             <ContDescricao>
-                <div className="img"/>
+                <img src={item.img_item} className="img"/>
                 <div className="contIcone">
                     <SetaVoltar/>
                 </div>
                 <div className="contTexto">
                     <div>
-                        <div className="nomeRestaurante">{produto.restaurante}</div>
-                        <h1>{produto.nome}</h1>
+                        <div className="nomeRestaurante">{item.nm_restaurante}</div>
+                        <h1>{item.nm_item}</h1>
                         <div className="contPreco">
                             <div className="preco">{precoFormatado}</div>
                             <div className="contQuantidade">
@@ -144,7 +141,7 @@ const DescricaoProduto = ({ produto }) => {
                         </div>
                         <EntregaBloco/>
                         <h2>Sobre</h2>
-                        <p>{produto.sobre}</p>
+                        <p>{item.des_item}</p>
                     </div>
                     <Botao $desktop>Adicionar</Botao>
                 </div>

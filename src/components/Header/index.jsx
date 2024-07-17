@@ -3,6 +3,8 @@ import menu from '../../assets/Menu.svg'
 import styled from 'styled-components'
 import BarraPesquisa from '../BarraPesquisa'
 import { Link } from 'react-router-dom'
+import BarraLateral from '../BarraLateral'
+import { useState } from 'react'
 
 const HeaderEstilizado = styled.header`
     display:${props => props.$desktop ? 'none' : 'flex'};
@@ -43,26 +45,38 @@ const HeaderEstilizado = styled.header`
 `
 
 const Header = ({ barraDePesquisa, $desktop, $barraDesktop }) => {
+    const [displayBarra, setDisplayBarra] = useState(true)
+
+    function abrirBarra(){
+        setDisplayBarra(false)
+    }
+    function fecharBarra(){
+        setDisplayBarra(true)
+    }
+
     return(
-        <HeaderEstilizado barraDePesquisa={barraDePesquisa} $desktop ={$desktop}>
-            <Link to={'/'}>
-                <img
-                    className='logo'
-                    src={logo}
-                    alt='Logo FSW Food'
-                />
-            </Link>
-            {barraDePesquisa ? <BarraPesquisa $desktop={$barraDesktop}/> : ''}
-            <label >
-                <input className='checkbox' type='checkbox'/>
-                <img
-                    className='menu'
-                    src={menu}
-                    alt='Menu'
-                />
-            </label>
-            <div className='linha'/>
-        </HeaderEstilizado>
+        <>
+            <HeaderEstilizado barraDePesquisa={barraDePesquisa} $desktop ={$desktop}>
+                <Link to={'/'}>
+                    <img
+                        className='logo'
+                        src={logo}
+                        alt='Logo FSW Food'
+                    />
+                </Link>
+                {barraDePesquisa ? <BarraPesquisa $desktop={$barraDesktop}/> : ''}
+                <label >
+                    <input onClick={abrirBarra} className='checkbox' type='checkbox'/>
+                    <img
+                        className='menu'
+                        src={menu}
+                        alt='Menu'
+                    />
+                </label>
+                <div className='linha'/>
+            </HeaderEstilizado>
+            <BarraLateral $none={displayBarra} fecharBarra={fecharBarra}/>
+        </>
     )
 }
 

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import { Buffer } from 'buffer';
 
 const CardCont = styled.div`
     line-height: 22px;
@@ -14,6 +15,9 @@ const CardCont = styled.div`
     & .precoItem{
         font-weight: 600;
     }
+    .nomeItem{
+        width: 160px;
+    }
     & .itemPedido{
         font-size: 14px;
         color: #7E8392;
@@ -22,16 +26,17 @@ const CardCont = styled.div`
 `
 
 const ItemPedido = ({ item, paginaRestaurante }) => {
+
     return (
         <li style={{listStyle: "none"}}>
             <CardCont paginaRestaurante={paginaRestaurante}>
-            <Link to={`/restaurante/${item.restaurante}/${item.nome}`}>
-                <div className="img"></div>
+            <Link to={`/restaurante/${item.nm_restaurante}/${item.nm_item}`}>
+                <img className="img" src={item.img_item}/>
             </Link>
                 <div className="cont-texto">
-                    <div className="nomeItem">{item.nome}</div>
-                    <div className="precoItem">{item.preco}</div>
-                    <div className="itemPedido">{item.restaurante}</div>
+                    <div className="nomeItem">{item.nm_item}</div>
+                    <div className="precoItem">{item.pre_item}</div>
+                    <div className="itemPedido">{item.res_item}</div>
                 </div>
             </CardCont>
             

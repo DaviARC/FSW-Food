@@ -8,7 +8,7 @@ const Overlay = styled.div`
     left: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.7);
-    z-index: 2;
+    z-index: ${props => props.$index ? props.$index : '2'};
 `
 
 export default Overlay

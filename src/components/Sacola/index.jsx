@@ -2,6 +2,7 @@ import styled from "styled-components"
 import Botao from "../Botao"
 import ItemSacola from "./ItemSacola"
 import Overlay from "../Overlay"
+import HeaderBarraLateral from "../HeaderBarraLateral"
 
 const AsideModificado = styled.aside`
     position: fixed;
@@ -16,22 +17,7 @@ const AsideModificado = styled.aside`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    display: none;
-    .contTitulo{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-    }
-    .titulo{
-        font-size: 18px;
-        font-weight: 600;
-    }
-    .button{
-        background-color: transparent;
-        border: none;
-        cursor: pointer ;
-    }
+    display: flex;
     .contPrecos{
         border: 1px solid #EEEEEE;
         padding: 20px;
@@ -74,10 +60,7 @@ const Sacola = ({ $none }) => {
         <Overlay $none={$none}>
             <AsideModificado>
                 <div>
-                    <div className="contTitulo">
-                        <h3 className="titulo">Sacola</h3>
-                        <button className="button"><img src="/icones/x.png"/></button>
-                    </div>
+                    <HeaderBarraLateral>Sacola</HeaderBarraLateral>
                     <ItemSacola/>
                 </div>
                 <div>

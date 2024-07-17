@@ -17,6 +17,7 @@ const ContItens = styled.div`
     .nav-categorias{
         display: none;
     }
+    margin-bottom: ${props=> props.$restaurante ? "20px" : "0"};
 
     @media screen and (min-width: 1024px){
         display: ${props => props.$mobile ? "none" : "block"};
@@ -28,7 +29,8 @@ const ContItens = styled.div`
         }
         .nav-categorias ul{
             display: flex;
-            justify-content: space-between;
+            justify-content: ${props => props.$categorias ? "space-between" : "left"};
+            gap: 16px;
             margin: 16px 0;
             overflow: ${props => props.paginaRestaurante ? "visible" : "hidden"};
             flex-wrap: ${props => props.paginaRestaurante ? "wrap" : "nowrap"};
@@ -54,10 +56,12 @@ const SpanVerTodos = styled.span`
     }
 `
 
-const Lista = ({ categorias, listaItens, titulo, pedidos, restaurantes, paginaRestaurante, $mobile, $desktop }) => {
+const Lista = ({ categorias, listaItens = [], titulo, pedidos, restauranteTipo, paginaRestaurante, $mobile, $desktop }) => {
+
     let SwiperComponents = null
     let Itens = null
     let CampoTexto = null
+    let slidesPerView = 3;
     if(!categorias){
         CampoTexto = <div style={{display: "flex", justifyContent: "space-between", marginTop: "20px"}}>
             <H3Modificado>{titulo}</H3Modificado>
@@ -65,6 +69,7 @@ const Lista = ({ categorias, listaItens, titulo, pedidos, restaurantes, paginaRe
         </div>
     }
     if(categorias){
+        slidesPerView = 3;
         SwiperComponents = listaItens.map(categoria => {
             return(
                 <SwiperSlide key={`slide${categoria.nome}`}>
@@ -78,7 +83,7 @@ const Lista = ({ categorias, listaItens, titulo, pedidos, restaurantes, paginaRe
                 )
             }
          )
-         Itens = listaItens.map(categoria => {
+         Itens = listaItens.map((categoria) => {
             return(
                 <ItemCategoria 
                     key={categoria.nome}
@@ -90,35 +95,51 @@ const Lista = ({ categorias, listaItens, titulo, pedidos, restaurantes, paginaRe
             }
         )
    } else if(pedidos){
+    slidesPerView = 2.1;
     SwiperComponents = 
     <>
-        <SwiperSlide key={`slide`}>
-            <ItemPedido paginaRestaurante={paginaRestaurante} item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
-        </SwiperSlide>
-         <SwiperSlide key={`slide`}>
-         <ItemPedido paginaRestaurante={paginaRestaurante} item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
-        </SwiperSlide>
-        <SwiperSlide key={`slide`}>
-            <ItemPedido paginaRestaurante={paginaRestaurante} item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
-        </SwiperSlide>
-        <SwiperSlide key={`slide`}>
-            <ItemPedido paginaRestaurante={paginaRestaurante} item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
-        </SwiperSlide>
+        {listaItens.map(item => {
+            return(
+                <SwiperSlide key={`slide` + item.nm_item}>
+                    <ItemPedido paginaRestaurante={paginaRestaurante} item={item}/>
+                </SwiperSlide>
+            )
+        })}
     </>
-    Itens = <ItemPedido paginaRestaurante={paginaRestaurante} item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
-   } else if(restaurantes){
-    SwiperComponents = <ItemRestaurante paginaRestaurante={paginaRestaurante} restaurante={{nome: "Sushidojo"}}/>
-    Itens = <ItemRestaurante restaurante={{nome: "Sushidojo"}}/>
+    Itens = <>
+        {listaItens.map(item =>{
+            return(
+                <ItemPedido key={item.nm_item} paginaRestaurante={paginaRestaurante} item={item}/>
+            )
+        })}
+    </>
+   } else if(restauranteTipo){
+    slidesPerView = 1.3
+    SwiperComponents = 
+    <>
+        {listaItens.map(restaurante => {
+            return(
+                <SwiperSlide key={`slide` + restaurante.nm_restaurante}>
+                    <ItemRestaurante restaurante={restaurante}/>
+                </SwiperSlide>
+            )
+        })}
+    </>
+    Itens = listaItens.map(restaurante => {
+        return(
+            <ItemRestaurante key={restaurante.nm_restaurante} restaurante={restaurante}/>  
+        )
+    })
    }
 
     return (
         <>
-            <ContItens $desktop={$desktop} $mobile={$mobile}>
+            <ContItens $categorias={categorias} $restaurante={restauranteTipo} $desktop={$desktop} $mobile={$mobile}>
             {CampoTexto}
                 <nav className='nav-categorias-swipper'>
                     <Swiper
-                        spaceBetween={1}
-                        slidesPerView={3}
+                        spaceBetween={10}
+                        slidesPerView={slidesPerView}
                     >
                         <ul>
                             {SwiperComponents}

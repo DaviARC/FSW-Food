@@ -108,10 +108,11 @@ const ContAbsolute = styled.div`
 `
 
 const DescricaoRestaurante = ({ restaurante }) => {
+    console.log(restaurante)
     return (
         <>
             <SectionRestaurante>
-                <div className="img"/>
+                <img src={restaurante.img_restaurante} className="img"/>
                 <div className="contIcones">
                     <SetaVoltar/>
                     <FavoritoBotao/>
@@ -119,15 +120,15 @@ const DescricaoRestaurante = ({ restaurante }) => {
                 <div className="contTexto">
                     <header>
                         <div className="contTitulo">
-                            <h1>{restaurante.nome}</h1> 
-                            <Estrela quantidade={restaurante.estrela} $cinza/>
+                            <h1>{restaurante.nm_restaurante}</h1> 
+                            <Estrela quantidade={restaurante.ava_restaurante} $cinza/>
                         </div>
                     </header>    
                     <EntregaBloco/>
-                    <div className="categoria">{restaurante.categoria}</div>
+                    <div className="categoria">-----</div>
                     <div className="descricaoRestaurante">
                         <h2>Sobre</h2>
-                        <p>{restaurante.sobre}</p>
+                        <p>{restaurante.sob_restaurante}</p>
                     </div>
                 </div>
             </SectionRestaurante>

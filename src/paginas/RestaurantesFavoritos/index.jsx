@@ -1,8 +1,6 @@
 import styled from "styled-components"
 import Header from "../../components/Header"
 import ItemRestaurante from "../../components/Lista/ItemRestaurante"
-import ModalDeletarFavorito from "../../components/ModalDeletarFavorito"
-import { useState } from "react"
 import Titulo from "../../components/Titulo"
 
 const MainRestaurantes = styled.main`
@@ -12,21 +10,17 @@ const MainRestaurantes = styled.main`
 `
 
 const RestauranteFavoritos = () => {
-    const [restaurante, setRestaurante] = useState('Sushidojo');
-    function aoClicar(restaurante){
-        setRestaurante(restaurante)
-    }
+   
 
     return(
         <>
             <Header barraDePesquisa $barraDesktop />
             <Titulo>Restaurantes Favoritos</Titulo>
             <MainRestaurantes>
-              <ItemRestaurante aoClicar={aoClicar} favorito $width restaurante={{nome: "Sushidojo"}}/>
+              <ItemRestaurante favorito $width restaurante={{nome: "Sushidojo"}}/>
               <ItemRestaurante favorito $width restaurante={{nome: "Sushidojo"}}/>
               <ItemRestaurante favorito $width restaurante={{nome: "Sushidojo"}}/>
             </MainRestaurantes>
-            <ModalDeletarFavorito restaurante={restaurante} aoFechar={() => setRestaurante(null)}/>
         </>
     )
 }
