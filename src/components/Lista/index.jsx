@@ -118,6 +118,7 @@ const Lista = ({ categorias, listaItens = [], titulo, pedidos, restauranteTipo, 
     SwiperComponents = 
     <>
         {listaItens.map(restaurante => {
+            console.log(restaurante)
             return(
                 <SwiperSlide key={`slide` + restaurante.nm_restaurante}>
                     <ItemRestaurante restaurante={restaurante}/>

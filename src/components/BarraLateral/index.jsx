@@ -3,6 +3,7 @@ import Overlay from "../Overlay"
 import HeaderBarraLateral from "../HeaderBarraLateral"
 import MenuLink from "../MenuLink"
 import LoginModal from "../LoginModal"
+import { useState } from "react"
 
 const AsideModificado = styled.aside`
     position: absolute;
@@ -34,6 +35,7 @@ const AsideModificado = styled.aside`
         align-items: center;
         justify-content: center;
         border-radius: 10px;
+        cursor: pointer;
     }
     .contPaginas{
         margin-top: 20px;
@@ -43,22 +45,84 @@ const AsideModificado = styled.aside`
     .categorias{
         margin-top: 20px;
     }
+    .logado{
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+    .contTextoLogado{
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+    .imgLogado{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
+    .nomeLogado{
+        font-weight: 600;
+    }
+    .emailLogado{
+        color: #7E8392;
+        font-size: 12px;
+    }
     @media screen and (min-width: 1024px){
         width: 360px;
     }
 `
+    const Logout = styled.div`
+        border: none;
+        border-top: 1px solid #EEEEEE;
+        padding-top: 20px;
+        
+        .botaoLogout{
+            padding-left: 16px;
+            display: flex;
+            align-items: center;
+            border: none;
+            gap: 4px;
+            background-color: transparent;
+            cursor: pointer;
+        }
+    `
 
 const BarraLateral = ({ $none, fecharBarra }) => {
+    const [display, setDisplay] = useState(true);
+    const [usuario, setUsuario] = useState(null);
+    
+    const salvaUsuario = (nome, log, img) => {
+        setUsuario({
+            nm_usuario: nome,
+            log_usuario: log,
+            img_usuario: img
+        })
+    }    
+    const logout = () => {
+        localStorage.clear();
+        setUsuario(null);
+    }
+
     return(
         <>
             <Overlay $none={$none}>
                 <AsideModificado>
                     <div className="header">
                         <HeaderBarraLateral fecharBarra={fecharBarra}>Menu</HeaderBarraLateral>
+                        {usuario ? 
+                         <div className="logado">
+                            <img className="imgLogado" src={usuario.img_usuario}/>
+                            <div className="contTextoLogado">
+                                <div className="nomeLogado">{usuario.nm_usuario}</div>
+                                <div className="emailLogado">{usuario.log_usuario}</div>
+                            </div>   
+                         </div>
+                         : 
                         <div className="login">
                             <div className="tituloLogin">Olá. Faça seu login!</div>
-                            <button className="botao"><img src="/icones/login.png"/></button>
+                            <button className="botao" onClick={()=>{setDisplay(false)}}><img src="/icones/login.png"/></button>
                         </div>
+                        }
                     </div>
                     <ul className="contPaginas">
                         <MenuLink img={'/icones/home.png'} to='/'>Ínicio</MenuLink>
@@ -74,9 +138,16 @@ const BarraLateral = ({ $none, fecharBarra }) => {
                         <MenuLink img={'/icones/sucos-barra.png'} to='/produto/Sucos'>Sucos</MenuLink>
                         <MenuLink img={'/icones/refrigerantes-barra.png'} to='/produto/Refrigerantes'>Refrigerantes</MenuLink>
                     </ul>
+                    {usuario ? 
+                        <Logout>
+                            <button onClick={logout} className="botaoLogout">
+                                <img className="imgLogout" src="/icones/logout.png"/>Sair da conta
+                            </button>
+                        </Logout>
+                        : ''}
                 </AsideModificado>
             </Overlay>
-            <LoginModal $none/>
+            <LoginModal display={display} definirPerfil={salvaUsuario} onSuccess={()=>{setDisplay(true)}}/>
         </>
     )
 }

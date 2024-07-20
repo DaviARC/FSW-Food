@@ -1,5 +1,8 @@
 import styled from "styled-components"
 import Overlay from "../Overlay"
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google"
+import axios from "axios"
+import { jwtDecode } from "jwt-decode"
 
 const ContLogin = styled.div`
     text-align: center;
@@ -29,6 +32,7 @@ const ContLogin = styled.div`
         border-radius: 10px;
         color: #EA1D2C;
         font-weight: 600;
+        cursor: pointer;
     }
     .botaoLogin img{
         margin-right: 6px;
@@ -38,13 +42,44 @@ const ContLogin = styled.div`
     }
 `
 
-const LoginModal = ({ $none }) => {
+const LoginModal = ({ display, onSuccess, definirPerfil }) => {
+
+    const login = async (credentialResponse) =>{
+        const dados = jwtDecode(credentialResponse.credential);
+
+        definirPerfil(dados.name, dados.email, dados.picture)
+
+        const responseLogin = await axios({
+            method: 'post',
+            url:'http://localhost:3000/login',
+            data: {
+                nm_cliente: dados.name,
+                log_cliente: dados.email,
+                google_id: dados.sub
+            }
+        })
+
+        const data = responseLogin.data;    
+        responseLogin.status === 200 ? onSuccess() : ''
+
+        localStorage.setItem('token', data.token);
+    }
+
     return(
-        <Overlay index={'4'} $none={$none}>
+        <Overlay index={'4'} $none={display}>
             <ContLogin>
                 <div className="titulo">Faça login na plataforma!</div>
                 <div className="sub">Conecte-se usando sua conta do Google ou Github.</div>
-                <button className="botaoLogin"><img src="/icones/google.png"/>Google</button>
+                <GoogleOAuthProvider clientId='284389834504-ud95no0tm8bcrc9meg5tqh9benq522dj.apps.googleusercontent.com'>
+                    <GoogleLogin 
+                        onSuccess={credentialResponse => {
+                            login(credentialResponse);
+                        }}
+                        onError={() => {
+                            console.log('Login Failed');
+                        }}
+                    />
+                </GoogleOAuthProvider>
             </ContLogin>
         </Overlay>
     )

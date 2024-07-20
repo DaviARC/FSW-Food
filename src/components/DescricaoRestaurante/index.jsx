@@ -103,7 +103,7 @@ const SectionRestaurante = styled.main`
 `
 const ContAbsolute = styled.div`
     @media screen and (max-width: 1024px) {
-        height: 400px;
+        height: 410px;
     }
 `
 
@@ -125,7 +125,7 @@ const DescricaoRestaurante = ({ restaurante }) => {
                         </div>
                     </header>    
                     <EntregaBloco/>
-                    <div className="categoria">-----</div>
+                    <div className="categoria">{restaurante.nm_categoria}</div>
                     <div className="descricaoRestaurante">
                         <h2>Sobre</h2>
                         <p>{restaurante.sob_restaurante}</p>

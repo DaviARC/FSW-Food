@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
-import { Buffer } from 'buffer';
 
 const CardCont = styled.div`
     line-height: 22px;

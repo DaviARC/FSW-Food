@@ -4,6 +4,8 @@ import Titulo from "../../components/Titulo"
 import { useParams } from "react-router-dom"
 import ItemPedido from "../../components/Lista/ItemPedido"
 import Lista from "../../components/Lista"
+import { useContext } from "react"
+import AppContext from "../../contexts/myContext"
 
 const MainProdutosCategoria = styled.main`
     display: flex;
@@ -12,19 +14,20 @@ const MainProdutosCategoria = styled.main`
 `
 
 const ProdutoPorCategoria = () => {
-    const params = useParams()
-
+    const parametros = useParams();
+    const { restaurantes, itens } = useContext(AppContext)
+    
+    const itensCategoria = itens.filter(item => item.nm_categoria === parametros.categoria)
+    const restaurantesCategoria = restaurantes.filter(restaurante => restaurante.nm_categoria === parametros.categoria)
+    
     return(
         <>
             <Header barraDePesquisa $barraDesktop/>
-            <Titulo>{params.categoria}</Titulo>
+            <Titulo>{parametros.categoria}</Titulo>
             <MainProdutosCategoria>
-                <ItemPedido item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
-                <ItemPedido item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
-                <ItemPedido item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
-                <ItemPedido item={{nome: 'hamburguer',preco: 12.5, restaurante:'Camilas'}}/>
+                {itensCategoria.map(item => <ItemPedido key={item.nm_item} item={item}/>)}
             </MainProdutosCategoria>
-            <Lista restaurantes titulo='Restaurantes' paginaRestaurante $desktop/>
+            <Lista listaItens={restaurantesCategoria} restauranteTipo titulo='Restaurantes' paginaRestaurante $desktop/>
         </>
     )
 }
