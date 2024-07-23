@@ -42,21 +42,22 @@ const DialogEstilizado = styled.dialog`
     }
 `
 
-const ModalDeletarFavorito = ({ restaurante, aoFechar }) => {
+const ModalDeletarFavorito = ({ item, aoFechar, aoCancelar, titulo, sobre, confirmar }) => {
+ 
     return(
         <>
-            {restaurante && <>
+            {item &&
                 <Overlay>
-                    <DialogEstilizado open={!!restaurante} onClose={aoFechar}>
-                        <div className="tituloDialog">Remover Restaurante</div>
-                        <div className="sobreDialog">Tem certeza que deseja remover esse restaurante dos favoritos?</div>
+                    <DialogEstilizado open={!!item} onClose={aoFechar}>
+                        <div className="tituloDialog">{titulo}</div>
+                        <div className="sobreDialog">{sobre}</div>
                         <form method="dialog" className="contButtons">
-                            <button className="cancelar" formMethod="dialog">Cancelar</button>
-                            <button className="confirmar" type="submit">Confirmar</button>
+                            <button className="cancelar" onClick={(e) => {e.preventDefault(); aoCancelar()}}>Cancelar</button>
+                            <button className="confirmar" formMethod="dialog" type="submit">{confirmar}</button>
                         </form>
                     </DialogEstilizado>
                 </Overlay>
-            </>}
+            }
         </>
     )
 }

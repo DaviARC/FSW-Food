@@ -3,6 +3,8 @@ import Botao from "../Botao"
 import ItemSacola from "./ItemSacola"
 import Overlay from "../Overlay"
 import HeaderBarraLateral from "../HeaderBarraLateral"
+import { useContext } from "react"
+import AppContext from "../../contexts/myContext"
 
 const AsideModificado = styled.aside`
     position: fixed;
@@ -55,19 +57,48 @@ const AsideModificado = styled.aside`
     }
 `
 
-const Sacola = ({ $none }) => {
+const Sacola = ({ $none, aoFechar }) => {
+    const { sacola, setSacola } = useContext(AppContext)
+    
+    let precoTotalAux = 0;
+    sacola[0] ? sacola.forEach(item => {
+        precoTotalAux += Number(item.pre_item);
+    }) : '';
+
+    const formatado = precoTotalAux.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+    });
+
+    const mudaQuantidade = (item, aumenta) => {
+        if(sacola.length > 0){
+            setSacola(sacola.map(itemSacola => {
+                if(itemSacola.cd_item === item.cd_item){
+                    if(aumenta){
+                        return {...itemSacola, quantidade: itemSacola.quantidade + 1}
+                    } else{
+                        if(itemSacola.quantidade > 1){
+                            return {...itemSacola, quantidade: itemSacola.quantidade - 1}
+                        }
+                    } 
+                }
+                return itemSacola
+            }))
+        }
+    }
+
     return(
         <Overlay $none={$none}>
             <AsideModificado>
                 <div>
-                    <HeaderBarraLateral>Sacola</HeaderBarraLateral>
-                    <ItemSacola/>
+                    <HeaderBarraLateral fecharBarra={aoFechar}>Sacola</HeaderBarraLateral>
+                    {sacola[0] ? sacola.map(item => <ItemSacola mudaQuantidade={mudaQuantidade} key={item.nm_item} item={item}/>) : ''}
                 </div>
                 <div>
                     <div className="contPrecos">
                         <div className="contTextoPreco">
                             <div className="sub">Subtotal</div>
-                            <div className="subPreco">R$ 35,00</div>
+                            <div className="subPreco">{formatado}</div>
                         </div>
                         <div className="contTextoPreco">
                             <div className="sub">Entrega</div>
@@ -79,7 +110,7 @@ const Sacola = ({ $none }) => {
                         </div>
                         <div className="contTextoPrecoTotal">
                             <div className="total">Total</div>
-                            <div className="totalPreco">R$ 31,50</div>
+                            <div className="totalPreco">{formatado}</div>
                         </div>
                     </div>
                     <Botao $desktop $mobile>Finalizar Pedido</Botao>

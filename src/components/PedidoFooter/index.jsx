@@ -1,5 +1,7 @@
 import styled from "styled-components"
 import Botao from "../Botao"
+import { useContext } from "react"
+import AppContext from "../../contexts/myContext"
 
 const FooterEstilizado = styled.footer`
     background-color: white; 
@@ -19,7 +21,7 @@ const FooterEstilizado = styled.footer`
         width: 100%;
         display: flex;
         justify-content: space-between;
-        padding: 20px;
+        padding: 15px 20px;
         box-sizing: border-box;
         align-items: center;
     }
@@ -47,24 +49,44 @@ const FooterEstilizado = styled.footer`
     }
     }
 `
+const ContAbsolute = styled.div`
+    height: 80px;
+`
 
-const PedidoFooter = ({ $none }) => {
+const SacolaFooter = ({ $none, aoClicar }) => {
+    const { sacola } = useContext(AppContext);
+    let precoTotalAux = 0;
+    let quantidadeTotal = 0;
+
+    sacola.forEach(item => {
+        quantidadeTotal += item.quantidade;
+        precoTotalAux += Number(item.pre_item * item.quantidade);
+    })
+
+    const formatado = precoTotalAux.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+    });
+ 
     return(
-        <FooterEstilizado $none={$none}>
-            <div className="contConteudoFooter">
-                <div className="contTexto">
-                    <div className="totalTexto">Total sem entrega</div>
-                    <div>
-                        <span className="precoTotal">R$ 31,50</span>
-                        <span className="quantidadeItem">/ 1 item</span>
+        <>
+            <FooterEstilizado $none={$none}>
+                <div className="contConteudoFooter">
+                    <div className="contTexto">
+                        <div className="totalTexto">Total sem entrega</div>
+                        <div>
+                            <span className="precoTotal">{formatado}</span>
+                            <span className="quantidadeItem">/{quantidadeTotal} {quantidadeTotal > 1 ? 'itens' : 'item'}</span>
+                        </div>
+                    </div>
+                    <div className="contBotao">
+                        <Botao aoClicar={aoClicar} $mobile $desktop>Ver Sacola</Botao>
                     </div>
                 </div>
-                <div className="contBotao">
-                    <Botao $mobile $desktop>Ver Sacola</Botao>
-                </div>
-            </div>
-        </FooterEstilizado>
+            </FooterEstilizado>
+            <ContAbsolute/>
+        </>
     )
 }
 
-export default PedidoFooter
+export default SacolaFooter

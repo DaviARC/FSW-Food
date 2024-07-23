@@ -42,12 +42,10 @@ const ContLogin = styled.div`
     }
 `
 
-const LoginModal = ({ display, onSuccess, definirPerfil }) => {
+const LoginModal = ({ display, onSuccess }) => {
 
     const login = async (credentialResponse) =>{
         const dados = jwtDecode(credentialResponse.credential);
-
-        definirPerfil(dados.name, dados.email, dados.picture)
 
         const responseLogin = await axios({
             method: 'post',
@@ -60,7 +58,7 @@ const LoginModal = ({ display, onSuccess, definirPerfil }) => {
         })
 
         const data = responseLogin.data;    
-        responseLogin.status === 200 ? onSuccess() : ''
+        responseLogin.status === 200 ? onSuccess(dados.name, dados.email, dados.picture) : ''
 
         localStorage.setItem('token', data.token);
     }

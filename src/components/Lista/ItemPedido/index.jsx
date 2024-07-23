@@ -34,7 +34,7 @@ const ItemPedido = ({ item, paginaRestaurante }) => {
             </Link>
                 <div className="cont-texto">
                     <div className="nomeItem">{item.nm_item}</div>
-                    <div className="precoItem">{item.pre_item}</div>
+                    <div className="precoItem">R$ {item.pre_item}</div>
                     <div className="itemPedido">{item.res_item}</div>
                 </div>
             </CardCont>

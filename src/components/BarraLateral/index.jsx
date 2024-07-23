@@ -4,6 +4,7 @@ import HeaderBarraLateral from "../HeaderBarraLateral"
 import MenuLink from "../MenuLink"
 import LoginModal from "../LoginModal"
 import { useState } from "react"
+import ModalDeletarFavorito from "../ModalDeletarFavorito"
 
 const AsideModificado = styled.aside`
     position: absolute;
@@ -90,8 +91,10 @@ const AsideModificado = styled.aside`
 const BarraLateral = ({ $none, fecharBarra }) => {
     const [display, setDisplay] = useState(true);
     const [usuario, setUsuario] = useState(null);
+    const [displayLogout, setDisplayLogout] = useState(null);
     
-    const salvaUsuario = (nome, log, img) => {
+    const onSucess = (nome, log, img) => {
+        setDisplay(true)
         setUsuario({
             nm_usuario: nome,
             log_usuario: log,
@@ -101,6 +104,7 @@ const BarraLateral = ({ $none, fecharBarra }) => {
     const logout = () => {
         localStorage.clear();
         setUsuario(null);
+        setDisplayLogout(null);
     }
 
     return(
@@ -140,14 +144,15 @@ const BarraLateral = ({ $none, fecharBarra }) => {
                     </ul>
                     {usuario ? 
                         <Logout>
-                            <button onClick={logout} className="botaoLogout">
+                            <button onClick={() => {setDisplayLogout(true)}} className="botaoLogout">
                                 <img className="imgLogout" src="/icones/logout.png"/>Sair da conta
                             </button>
                         </Logout>
                         : ''}
                 </AsideModificado>
             </Overlay>
-            <LoginModal display={display} definirPerfil={salvaUsuario} onSuccess={()=>{setDisplay(true)}}/>
+            <LoginModal display={display} onSuccess={onSucess}/>
+            <ModalDeletarFavorito item={displayLogout} aoCancelar={() => {setDisplayLogout(false)}} aoFechar={logout} titulo='Sair da conta' sobre='Deseja mesmo sair da plataforma?' confirmar='sair'/>
         </>
     )
 }

@@ -13,6 +13,7 @@ import AppContext from "./contexts/myContext";
 function AppRoutes() {
   const [itens, setItens] = useState([]);
   const [restaurantes, setRestaurantes] = useState([])
+  const [sacola, setSacola] = useState([]);
 
   useEffect(()=>{
     async function fetchData(){
@@ -77,7 +78,7 @@ function AppRoutes() {
   };
 
   return(
-    <AppContext.Provider value={{itens, setItens, restaurantes, setRestaurantes}}>
+    <AppContext.Provider value={{itens, setItens, restaurantes, setRestaurantes, sacola, setSacola}}>
       <BrowserRouter>
         <EstilosGlobais/>
         <Routes>

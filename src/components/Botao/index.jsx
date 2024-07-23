@@ -17,9 +17,9 @@ const BotaoModificado = styled.button`
     }
 `
 
-const Botao = ({ children, $mobile, $desktop, $cinza }) => {
+const Botao = ({ children, $mobile, $desktop, $cinza, aoAdicionar, aoClicar, item }) => {
     return(
-        <BotaoModificado $cinza={$cinza} $desktop={$desktop} $mobile={$mobile}>{ children }</BotaoModificado>
+        <BotaoModificado onClick={() => {aoAdicionar ? aoAdicionar(item) : aoClicar()}} $cinza={$cinza} $desktop={$desktop} $mobile={$mobile}>{ children }</BotaoModificado>
     )
 }
 

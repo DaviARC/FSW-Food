@@ -18,7 +18,7 @@ const ProdutoPorCategoria = () => {
     const { restaurantes, itens } = useContext(AppContext)
     
     const itensCategoria = itens.filter(item => item.nm_categoria === parametros.categoria)
-    const restaurantesCategoria = restaurantes.filter(restaurante => restaurante.nm_categoria === parametros.categoria)
+    const restaurantesCategoria = restaurantes.filter(restaurante => {console.log(restaurante, parametros.categoria); return (restaurante.nm_categoria === parametros.categoria)})
     
     return(
         <>

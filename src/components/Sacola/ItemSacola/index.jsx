@@ -56,18 +56,27 @@ const ContItemSacola = styled.div`
     }
 `
 
-const ItemSacola = () => {
+const ItemSacola = ({ item, mudaQuantidade }) => {
+    
+
+    let preco = Number(item.pre_item);
+
+    const precoFormatado = preco.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+    });
+
     return(
         <ContItemSacola>
             <div className="contImgTexto">
-                <div className="img"/>
+                <img className="img" src={item.img_item}/>
                 <div className="contTexto">
-                    <div className="nome">Ramen Clássico</div>
-                    <div className="preco">R$ 31,50</div>
+                    <div className="nome">{item.nm_item}</div>
+                    <div className="preco">{precoFormatado}</div>
                     <div className="contQuantidade">
-                        <button className="botaoQuantidade"><img src="/icones/seta-esquerda-preta.png"/></button>
-                        <div className="quantidade">1</div>
-                        <button className="botaoQuantidade"><img src="/icones/seta-direita-preta.png"/></button>
+                        <button className="botaoQuantidade" onClick={() => mudaQuantidade(item)}><img src="/icones/seta-esquerda-preta.png"/></button>
+                        <div className="quantidade">{item.quantidade}</div>
+                        <button className="botaoQuantidade" onClick={() => mudaQuantidade(item, true)}><img src="/icones/seta-direita-preta.png"/></button>
                     </div>
                 </div>
             </div>

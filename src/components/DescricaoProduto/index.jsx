@@ -60,6 +60,7 @@ const ContDescricao = styled.main`
         background-color: transparent;
         font-weight: 600;
         font-size: 16px;
+        cursor: pointer;
     }
     .botaoQuantidade:hover{
         transition: 0.4s;
@@ -117,9 +118,10 @@ const ContAbsolute = styled.div`
     }
 `
 
-const DescricaoProduto = ({ item = {} }) => {
-    const precoFormatado = item.pre_item.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
-
+const DescricaoProduto = ({ item = {}, aoAdicionar, quantidade, mudaQuantidade }) => {
+    const preco = Number(item.pre_item);
+    const precoFormatado = preco.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
+ 
     return(
         <>
             <ContDescricao>
@@ -134,16 +136,16 @@ const DescricaoProduto = ({ item = {} }) => {
                         <div className="contPreco">
                             <div className="preco">{precoFormatado}</div>
                             <div className="contQuantidade">
-                                <button className="botaoQuantidade"><img src="/icones/seta-esquerda-preta.png"/></button>
-                                    <div className="quantidade">1</div>
-                                <button className="botaoQuantidade"><img src="/icones/seta-direita-preta.png"/></button>
+                                <button className="botaoQuantidade" onClick={() => {mudaQuantidade()}}><img src="/icones/seta-esquerda-preta.png"/></button>
+                                    <div className="quantidade">{quantidade}</div>
+                                <button className="botaoQuantidade" onClick={() => {mudaQuantidade(true)}}><img src="/icones/seta-direita-preta.png"/></button>
                             </div>
                         </div>
                         <EntregaBloco/>
                         <h2>Sobre</h2>
                         <p>{item.des_item}</p>
                     </div>
-                    <Botao $desktop>Adicionar</Botao>
+                    <Botao aoAdicionar={aoAdicionar} item={{...item, quantidade}} $desktop>Adicionar</Botao>
                 </div>
             </ContDescricao>
             <ContAbsolute/>
