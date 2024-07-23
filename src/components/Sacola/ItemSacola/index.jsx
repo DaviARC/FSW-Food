@@ -53,10 +53,11 @@ const ContItemSacola = styled.div`
         align-items: center;
         padding: 8px;
         border-radius: 10px;
+        cursor: pointer;
     }
 `
 
-const ItemSacola = ({ item, mudaQuantidade }) => {
+const ItemSacola = ({ item, mudaQuantidade, apagaItemDaSacola }) => {
     
 
     let preco = Number(item.pre_item);
@@ -80,7 +81,7 @@ const ItemSacola = ({ item, mudaQuantidade }) => {
                     </div>
                 </div>
             </div>
-            <button><img src="/icones/trash.png"/></button>
+            <button onClick={() => apagaItemDaSacola(item)}><img src="/icones/trash.png"/></button>
         </ContItemSacola>
     )
 }

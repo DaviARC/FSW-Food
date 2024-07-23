@@ -44,7 +44,6 @@ const Produto = () => {
             setSacola([...sacola, item])
         }
 
-        console.log(sacola)
         setQuantidade(1)
     }
 

@@ -3,8 +3,9 @@ import Overlay from "../Overlay"
 import HeaderBarraLateral from "../HeaderBarraLateral"
 import MenuLink from "../MenuLink"
 import LoginModal from "../LoginModal"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import ModalDeletarFavorito from "../ModalDeletarFavorito"
+import AppContext from "../../contexts/myContext"
 
 const AsideModificado = styled.aside`
     position: absolute;
@@ -39,9 +40,9 @@ const AsideModificado = styled.aside`
         cursor: pointer;
     }
     .contPaginas{
-        margin-top: 20px;
+        margin-top: 10px;
         border-bottom: 1px solid #EEEEEE;
-        padding-bottom: 20px;
+        padding-bottom: 10px;
     }
     .categorias{
         margin-top: 20px;
@@ -70,6 +71,10 @@ const AsideModificado = styled.aside`
     }
     @media screen and (min-width: 1024px){
         width: 360px;
+        .contPaginas {
+            margin-top: 20px;
+            padding-bottom: 20px;
+        }
     }
 `
     const Logout = styled.div`
@@ -90,16 +95,17 @@ const AsideModificado = styled.aside`
 
 const BarraLateral = ({ $none, fecharBarra }) => {
     const [display, setDisplay] = useState(true);
-    const [usuario, setUsuario] = useState(null);
+    const { usuario, setUsuario } = useContext(AppContext);
     const [displayLogout, setDisplayLogout] = useState(null);
     
     const onSucess = (nome, log, img) => {
         setDisplay(true)
-        setUsuario({
+        localStorage.setItem('usuario', JSON.stringify({
             nm_usuario: nome,
             log_usuario: log,
             img_usuario: img
-        })
+        }))
+        setUsuario(JSON.parse(localStorage.getItem('usuario')))
     }    
     const logout = () => {
         localStorage.clear();

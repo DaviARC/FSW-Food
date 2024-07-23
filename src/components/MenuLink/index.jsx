@@ -8,13 +8,16 @@ const ItemLista = styled.li`
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 12px 16px;
+    padding: 8px 16px;
     box-sizing: border-box;
     margin-bottom: 4px;
     .link{
         text-decoration: none;
         color: ${props => props.$destacado ? "#FFFFFF" : "#323232"};
         font-size: 14px
+    }
+    @media screen and (min-width:1024px) {
+     padding: 12px 16px;
     }
 `
 

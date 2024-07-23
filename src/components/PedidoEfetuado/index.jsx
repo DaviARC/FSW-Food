@@ -15,7 +15,7 @@ const ContPedidoEfetuado = styled.div`
     border-radius: 10px;
     text-align: center;
     width: 60%;
-    display: ${props => props.$none ? "none" : "block"};
+    display: ${props => props.$none ? "none" : "flex"};
     .img{
         background-color: #EA1D2C;
         width: 60px;
@@ -39,7 +39,7 @@ const ContPedidoEfetuado = styled.div`
     }
 `
 
-const PedidoEfetuado = ({ $none }) => {
+const PedidoEfetuado = ({ $none, aoFechar }) => {
     return(
         <Overlay $none={$none}>
             <ContPedidoEfetuado>
@@ -48,7 +48,7 @@ const PedidoEfetuado = ({ $none }) => {
                 </div>
                 <div className="titulo">Pedido Efetuado!</div>
                 <div className="texto">Seu pedido foi realizado com sucesso.</div>
-                <Botao $desktop $mobile $cinza>Confirmar</Botao>
+                <Botao aoClicar={aoFechar} $desktop $mobile $cinza>Confirmar</Botao>
             </ContPedidoEfetuado>
         </Overlay>
     )

@@ -14,6 +14,7 @@ function AppRoutes() {
   const [itens, setItens] = useState([]);
   const [restaurantes, setRestaurantes] = useState([])
   const [sacola, setSacola] = useState([]);
+  const [usuario, setUsuario] = useState(JSON.parse(localStorage.getItem('usuario')));
 
   useEffect(()=>{
     async function fetchData(){
@@ -78,7 +79,7 @@ function AppRoutes() {
   };
 
   return(
-    <AppContext.Provider value={{itens, setItens, restaurantes, setRestaurantes, sacola, setSacola}}>
+    <AppContext.Provider value={{itens, setItens, restaurantes, setRestaurantes, sacola, setSacola, usuario, setUsuario}}>
       <BrowserRouter>
         <EstilosGlobais/>
         <Routes>

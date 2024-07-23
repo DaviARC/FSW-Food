@@ -3,8 +3,11 @@ import Botao from "../Botao"
 import ItemSacola from "./ItemSacola"
 import Overlay from "../Overlay"
 import HeaderBarraLateral from "../HeaderBarraLateral"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import AppContext from "../../contexts/myContext"
+import axios from "axios"
+import LoginModal from "../LoginModal"
+import PedidoEfetuado from "../PedidoEfetuado"
 
 const AsideModificado = styled.aside`
     position: fixed;
@@ -58,17 +61,20 @@ const AsideModificado = styled.aside`
 `
 
 const Sacola = ({ $none, aoFechar }) => {
-    const { sacola, setSacola } = useContext(AppContext)
-    
+    const { sacola, setSacola,setUsuario } = useContext(AppContext);
+    const [displayLogin, setDisplayLogin] = useState(true);
+    const [displayPedidoEfetuado, setDisplayPedidoEfetuado] = useState(true);
+
     let precoTotalAux = 0;
-    sacola[0] ? sacola.forEach(item => {
-        precoTotalAux += Number(item.pre_item);
-    }) : '';
+    sacola.forEach(item => {
+        precoTotalAux += Number(item.pre_item * item.quantidade);
+    })
 
     const formatado = precoTotalAux.toLocaleString('pt-BR', {
         style: 'currency',
         currency: 'BRL',
     });
+
 
     const mudaQuantidade = (item, aumenta) => {
         if(sacola.length > 0){
@@ -86,13 +92,58 @@ const Sacola = ({ $none, aoFechar }) => {
             }))
         }
     }
+    const apagaItemDaSacola = (item) => {
+        setSacola(sacola.filter(itemSacola => item.cd_item !== itemSacola.cd_item))
+    }
+
+    const finalizarPedido = async () => {
+        try{
+            const responsePedido = await axios({
+                url: 'http://localhost:3000/pedidos',
+                method: 'POST',
+                headers: {Authorization: localStorage.getItem('token')},
+            })
+            const pedido = responsePedido.data;
+    
+            sacola.forEach( async itemSacola => {
+                console.log(pedido[0].cd_pedido)
+                await axios({
+                    url: 'http://localhost:3000/pedidos/itemPedidos',
+                    method: 'POST',
+                    data: {
+                        cd_pedido: pedido[0].cd_pedido,
+                        cd_item: itemSacola.cd_item,
+                        qua_item_pedido: itemSacola.quantidade
+                    }
+                })
+            }) 
+            setSacola([])
+            setDisplayPedidoEfetuado(false)
+        }
+        catch(e) {
+            if(e.response.status === 400){
+                setDisplayLogin(false)
+            } else {
+                console.log(e)
+            }
+        }
+    }
+    const onSucess = (nome, log, img) => {
+        setDisplayLogin(true)
+        localStorage.setItem('usuario', JSON.stringify({
+            nm_usuario: nome,
+            log_usuario: log,
+            img_usuario: img
+        }))
+        setUsuario(JSON.parse(localStorage.getItem('usuario')))
+    }  
 
     return(
         <Overlay $none={$none}>
             <AsideModificado>
                 <div>
                     <HeaderBarraLateral fecharBarra={aoFechar}>Sacola</HeaderBarraLateral>
-                    {sacola[0] ? sacola.map(item => <ItemSacola mudaQuantidade={mudaQuantidade} key={item.nm_item} item={item}/>) : ''}
+                    {sacola[0] ? sacola.map(item => <ItemSacola apagaItemDaSacola={apagaItemDaSacola} mudaQuantidade={mudaQuantidade} key={item.nm_item} item={item}/>) : ''}
                 </div>
                 <div>
                     <div className="contPrecos">
@@ -113,9 +164,11 @@ const Sacola = ({ $none, aoFechar }) => {
                             <div className="totalPreco">{formatado}</div>
                         </div>
                     </div>
-                    <Botao $desktop $mobile>Finalizar Pedido</Botao>
+                    <Botao aoClicar={finalizarPedido} $desktop $mobile>Finalizar Pedido</Botao>
                 </div>
             </AsideModificado>
+            <LoginModal display={displayLogin} onSuccess={onSucess}/>
+            <PedidoEfetuado $none={displayPedidoEfetuado} aoFechar={() => {setDisplayPedidoEfetuado(true); aoFechar(); setSacola([]);}}/>
         </Overlay>
     )
 }
