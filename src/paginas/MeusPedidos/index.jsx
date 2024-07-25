@@ -41,7 +41,7 @@ const MeusPedidos = () => {
 
     return(
         <>
-            <Header barraDePesquisa $barraDesktop />
+            <Header barraDePesquisa $barraDesktop linha />
             <Titulo>Meus Pedidos</Titulo>
             <MainPedidos>
                 {pedidosPorIdPedido.map(arrPedidos => {

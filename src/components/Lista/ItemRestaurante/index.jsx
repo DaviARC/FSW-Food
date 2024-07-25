@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components"
 import Estrela from "../../Estrela";
 import FavoritoBotao from "../../FavoritoBotao";
-import ModalDeletarFavorito from "../../ModalDeletarFavorito";
-import { useState } from "react";
+import { useContext } from "react";
+import AppContext from "../../../contexts/myContext";
 
 const ContItemRestaurante = styled.div`
     position: relative;
@@ -61,35 +61,37 @@ const ContItemRestaurante = styled.div`
     }
 `
 
-const ItemRestaurante = ({ restaurante, favorito, $width, aoClicar }) => {
-    const [restauranteSelecionado, setRestauranteSelecioando] = useState(null);
+const ItemRestaurante = ({ restaurante, $width }) => {
+    const { setRestauranteSelecionado } = useContext(AppContext);
+
 
     return(
-        <ContItemRestaurante $width={$width}>
-                <Link style={{width: "auto"}} to={`/restaurante/${restaurante.nm_restaurante}`}>
-                    <img className="img" src={restaurante.img_restaurante}/>
-                </Link>
-                        <div className="icones">
-                            <Estrela quantidade={'5.0'}/>
-                            <FavoritoBotao favorito={favorito} aoClicar={aoClicar} restaurante={restaurante.nome}/>
+        <>
+            <ContItemRestaurante $width={$width}>
+                    <Link style={{width: "auto"}} to={`/restaurante/${restaurante.nm_restaurante}`}>
+                        <img className="img" src={restaurante.img_restaurante}/>
+                    </Link>
+                            <div className="icones">
+                                <Estrela cdRestaurante={restaurante.cd_restaurante} quantidade={restaurante.ava_restaurante}/>
+                                <FavoritoBotao favorito={restaurante.favorito} aoClicar={() => setRestauranteSelecionado(restaurante)} restaurante={restaurante.nome}/>
+                            </div>
+                    <div className="nomeRestaurante">{restaurante.nm_restaurante}</div>
+                    <div className="contEntrega">
+                        <div className="contEntregaConteudo">
+                            <img
+                                src="/icones/entregador.png"
+                            />
+                            <span className="textoEntrega">Entrega Grátis</span>
                         </div>
-                <div className="nomeRestaurante">{restaurante.nm_restaurante}</div>
-                <div className="contEntrega">
-                    <div className="contEntregaConteudo">
-                        <img
-                            src="/icones/entregador.png"
-                        />
-                        <span className="textoEntrega">Entrega Grátis</span>
+                        <div className="contEntregaConteudo">
+                            <img
+                                src="/icones/timer.png"
+                            />
+                            <span className="textoEntrega">45 min</span>
+                        </div>
                     </div>
-                    <div className="contEntregaConteudo">
-                        <img
-                            src="/icones/timer.png"
-                        />
-                        <span className="textoEntrega">45 min</span>
-                    </div>
-                </div>
-                <ModalDeletarFavorito restaurante={restauranteSelecionado} aoFechar={() => setRestauranteSelecioando(null)}/>
-        </ContItemRestaurante>
+            </ContItemRestaurante>
+        </>
     )
 }
 

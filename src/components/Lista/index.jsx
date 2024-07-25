@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import ItemCategoria from './ItemCategoria';
 import ItemPedido from './ItemPedido';
 import ItemRestaurante from './ItemRestaurante';
+import { Link } from 'react-router-dom';
 
 const ContItens = styled.div`
     display: ${props => props.$desktop ? "none" : "block"};
@@ -57,15 +58,15 @@ const SpanVerTodos = styled.span`
 `
 
 const Lista = ({ categorias, listaItens = [], titulo, pedidos, restauranteTipo, paginaRestaurante, $mobile, $desktop }) => {
-
     let SwiperComponents = null
     let Itens = null
     let CampoTexto = null
     let slidesPerView = 3;
+    
     if(!categorias){
         CampoTexto = <div style={{display: "flex", justifyContent: "space-between", marginTop: "20px"}}>
             <H3Modificado>{titulo}</H3Modificado>
-            <SpanVerTodos paginaRestaurante={paginaRestaurante}>Ver todos <span>{">"}</span></SpanVerTodos>
+            <SpanVerTodos paginaRestaurante={paginaRestaurante} style={{listStyle: "none"}}><Link style={{textDecoration: "none", color: "#EA1D2C"}} to={`verTodos/${restauranteTipo ? 'Restaurantes' : 'Itens'}`}>Ver todos <span>{">"}</span></Link></SpanVerTodos>
         </div>
     }
     if(categorias){

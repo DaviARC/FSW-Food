@@ -34,7 +34,7 @@ const HeaderEstilizado = styled.header`
         padding: 20px 0;
 
         .linha{
-            display:${props => props.barraDePesquisa ? 'block' : 'none'};
+            display:${props => props.$linha ? 'block' : 'none'};
             position: absolute;
             width: 100%;
             left: 0;
@@ -44,7 +44,7 @@ const HeaderEstilizado = styled.header`
     }
 `
 
-const Header = ({ barraDePesquisa, $desktop, $barraDesktop }) => {
+const Header = ({ barraDePesquisa, $desktop, $barraDesktop, linha }) => {
     const [displayBarra, setDisplayBarra] = useState(true)
 
     function abrirBarra(){
@@ -56,7 +56,7 @@ const Header = ({ barraDePesquisa, $desktop, $barraDesktop }) => {
 
     return(
         <>
-            <HeaderEstilizado barraDePesquisa={barraDePesquisa} $desktop ={$desktop}>
+            <HeaderEstilizado $linha={linha} $barraDesktop={$barraDesktop} $desktop ={$desktop}>
                 <Link to={'/'}>
                     <img
                         className='logo'

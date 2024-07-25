@@ -10,8 +10,12 @@ const ButtonFavorito = styled.button`
     justify-content: center;
     align-items: center;
     border: none;
-    cursor: pointer;    
+    cursor: pointer; 
+    & img{
+        width: ${props => props.$favorito ? "18px" : "16px"};;
+    }   
 `
+
 
 const FavoritoBotao = ({ favorito, aoClicar, restaurante }) => {
     return(

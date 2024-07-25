@@ -19,12 +19,14 @@ const Produto = () => {
         return item.nm_restaurante === parametros.restaurante
     })
 
+    let selecionado = itensRestaurante.filter(item => item.nm_item === parametros.nome)
+
     const itensLista = {
         selecionado: itensRestaurante.filter(item => item.nm_item === parametros.nome),
-        recomendados: itensRestaurante.filter(item => item.nm_categoria !== 'Sucos' && item.nm_categoria !== 'Refrigerantes' && item.nm_categoria !== 'Sobremesas'),  
-        sucos: itensRestaurante.filter(item => item.nm_categoria === 'Sucos'),
-        refrigerantes: itensRestaurante.filter(item => item.nm_categoria === 'Refrigerantes'),
-        sobremesas: itensRestaurante.filter(item => item.nm_categoria === 'Sobremesas')
+        recomendados: itensRestaurante.filter(item => item.nm_categoria !== 'Sucos' && item.nm_categoria !== 'Refrigerantes' && item.nm_categoria !== 'Sobremesas' && item.nm_item !== selecionado[0].nm_item),  
+        sucos: itensRestaurante.filter(item => item.nm_categoria === 'Sucos' && item.nm_item !== selecionado[0].nm_item),
+        refrigerantes: itensRestaurante.filter(item => item.nm_categoria === 'Refrigerantes' && item.nm_item !== selecionado[0].nm_item),
+        sobremesas: itensRestaurante.filter(item => item.nm_categoria === 'Sobremesas' && item.nm_item !== selecionado[0].nm_item)
     }
 
     const aoAdicionar = (item) => {
@@ -53,10 +55,10 @@ const Produto = () => {
 
     return(
         <>
-            <Header barraDePesquisa $desktop/>
-            {itens[0] ? <DescricaoProduto mudaQuantidade={mudaQuantidade} quantidade={quantidade} aoAdicionar={aoAdicionar} item={itensLista.selecionado[0]}/> : ''}
+            <Header linha barraDePesquisa $desktop/>
+            {itens[0] ? <DescricaoProduto mudaQuantidade={mudaQuantidade} quantidade={quantidade} aoAdicionar={aoAdicionar} item={selecionado[0]}/> : ''}
             {itensLista.sucos[0] ? <Lista listaItens={itensLista.sucos} titulo='Sucos' pedidos paginaRestaurante/> : <Lista listaItens={itensLista.refrigerantes} titulo='Refrigerantes' pedidos paginaRestaurante/>}
-            <Botao aoAdicionar={aoAdicionar} item={{...itensLista.selecionado[0], quantidade}} $mobile>Adicionar à Sacola</Botao>
+            <Botao aoAdicionar={aoAdicionar} item={{...selecionado, quantidade}} $mobile>Adicionar à Sacola</Botao>
             {sacola[0] ? <SacolaFooter aoClicar={(() => {setDisplaySacola(false)})}/> : ''}
             <Sacola $none={displaySacola} aoFechar={() => {setDisplaySacola(true)}}/>
         </>

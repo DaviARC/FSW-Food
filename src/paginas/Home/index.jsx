@@ -14,9 +14,10 @@ import refrigerante from '../../assets/soda.svg';
 import BarraLateral from '../../components/BarraLateral';
 import AppContext from '../../contexts/myContext';
 import { useContext } from 'react';
+import ModalDeletarFavorito from '../../components/ModalDeletarFavorito';
 
 
-const Home = () => {  
+const Home = ({ aoConfirmar }) => {  
   const categorias = [
     {
         path: lanche,
@@ -47,7 +48,6 @@ const Home = () => {
         nome: "Refrigerantes"
     }
 ]
-
   const textoCardPizza = 
   <>
     <div>até</div>
@@ -61,7 +61,7 @@ const Home = () => {
     <div className="strong">R$17,90</div>
     <div>em Lanches</div>
   </>
-  const {itens, restaurantes} = useContext(AppContext)
+  const {itens, restaurantes, restauranteSelecionado, setRestauranteSelecionado} = useContext(AppContext)
 
   const listaRecomendados = itens.filter((item, i) => {
     const constFiltroPorCategoria = item.nm_categoria !== 'Sobremesas' && item.nm_categoria !== 'Sucos' && item.nm_categoria !== 'Refrigerantes'
@@ -86,6 +86,14 @@ const Home = () => {
       </div>
       <Lista restauranteTipo listaItens={restaurantes} titulo='Restaurantes Recomendados'/>
       <BarraLateral $none/>
+      {restauranteSelecionado ? <ModalDeletarFavorito 
+        item={restauranteSelecionado} 
+        aoFechar={aoConfirmar} 
+        aoCancelar={() => setRestauranteSelecionado(null)}
+        sobre={restauranteSelecionado.favorito ? 'Tem certeza que deseja remover esse restaurante dos favoritos?' : 'Deseja adicionar esse restaurante aos favoritos?'}
+        titulo={restauranteSelecionado.favorito ? 'Remover Restaurante' : 'Adicionar restaurante'}
+        confirmar='Confirmar'
+      /> : ''}
     </>
   )
 }

@@ -2,6 +2,7 @@ import styled from "styled-components"
 import EntregaBloco from "../EntregaBloco"
 import SetaVoltar from "../SetaVoltar"
 import Botao from "../Botao"
+import Estrela from "../Estrela"
 
 const ContDescricao = styled.main`
     position: absolute;
@@ -140,6 +141,9 @@ const DescricaoProduto = ({ item = {}, aoAdicionar, quantidade, mudaQuantidade }
                                     <div className="quantidade">{quantidade}</div>
                                 <button className="botaoQuantidade" onClick={() => {mudaQuantidade(true)}}><img src="/icones/seta-direita-preta.png"/></button>
                             </div>
+                        </div>
+                        <div style={{position: "relative", display: "inline-block", marginTop: "6px"}}>
+                            <Estrela cdItem={item.cd_item} quantidade={item.ava_item} $cinza/>
                         </div>
                         <EntregaBloco/>
                         <h2>Sobre</h2>

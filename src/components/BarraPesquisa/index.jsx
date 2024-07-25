@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom'
 import lupa from '../../assets/Search.svg'
 import styled from 'styled-components'
+import { useState } from 'react'
 
 const ContBarraPesquisa = styled.div`
     position: relative;
@@ -43,16 +45,21 @@ const ContBarraPesquisa = styled.div`
 
 // eslint-disable-next-line react/prop-types
 const BarraPesquisa = ({ amarelo, $mobile, $desktop }) =>{
+    const [value, setValue] = useState();
+
     return(
         <ContBarraPesquisa $mobile={$mobile} $desktop={$desktop}>
             <input
+                onChange={(e) => setValue(e.target.value)}
                 placeholder="Buscar Restaurantes"
             />
             <div style={{backgroundColor: amarelo ? '#FFB100' : '#EA1D2C'}}>
-                <img
-                    src={lupa}
-                    alt="Lupa"
-                />
+                <Link to={'buscarRestaurante/' + value}>
+                    <img
+                        src={lupa}
+                        alt="Lupa"
+                    />
+                </Link>
             </div>
         </ContBarraPesquisa>
     )
