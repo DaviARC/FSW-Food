@@ -58,7 +58,7 @@ const Produto = () => {
             <Header linha barraDePesquisa $desktop/>
             {itens[0] ? <DescricaoProduto mudaQuantidade={mudaQuantidade} quantidade={quantidade} aoAdicionar={aoAdicionar} item={selecionado[0]}/> : ''}
             {itensLista.sucos[0] ? <Lista listaItens={itensLista.sucos} titulo='Sucos' pedidos paginaRestaurante/> : <Lista listaItens={itensLista.refrigerantes} titulo='Refrigerantes' pedidos paginaRestaurante/>}
-            <Botao aoAdicionar={aoAdicionar} item={{...selecionado, quantidade}} $mobile>Adicionar à Sacola</Botao>
+            <Botao aoAdicionar={aoAdicionar} item={{...selecionado[0], quantidade}} $mobile>Adicionar à Sacola</Botao>
             {sacola[0] ? <SacolaFooter aoClicar={(() => {setDisplaySacola(false)})}/> : ''}
             <Sacola $none={displaySacola} aoFechar={() => {setDisplaySacola(true)}}/>
         </>

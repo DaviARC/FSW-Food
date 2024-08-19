@@ -31,7 +31,7 @@ const Restaurante = () => {
 
     return(
         <>
-            <Header barraDePesquisa $desktop/>
+            <Header linha barraDePesquisa $desktop/>
             {restaurante[0] ? <DescricaoRestaurante restaurante={restaurante[0]}/> : ''}
             {itensLista.recomendados[0] ? <Lista listaItens={itensLista.recomendados} titulo='Pedidos Recomendados' pedidos paginaRestaurante/> : ''}
             {itensLista.sobremesas[0] ? <Lista listaItens={itensLista.sobremesas} titulo='Sobremesas' $mobile pedidos paginaRestaurante/> : ''}
